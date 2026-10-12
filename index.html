@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RasioMat SD 6 - Pembelajaran Rasio Interaktif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Fredoka -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                        },
+                        portal1: {
+                            light: '#eff6ff',
+                            DEFAULT: '#2563eb',
+                            dark: '#1d4ed8'
+                        },
+                        portal2: {
+                            light: '#f0fdf4',
+                            DEFAULT: '#16a34a',
+                            dark: '#15803d'
+                        },
+                        portal3: {
+                            light: '#fef2f2',
+                            DEFAULT: '#dc2626',
+                            dark: '#b91c1c'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .font-display {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        /* Bounce animation for cards */
+        .hover-bounce {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-bounce:active {
+            transform: scale(0.97);
+        }
+        /* Gradient text */
+        .text-gradient-blue {
+            background: linear-gradient(135deg, #2563eb, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- TOP NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <button onclick="navigateTo('dashboard')" class="flex items-center space-x-2 text-left focus:outline-none">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-sky-200">
+                    <i class="fa-solid me-0 fa-calculator text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-display text-xl font-bold text-slate-800 leading-none">RasioMat <span class="text-sky-500 text-xs px-1.5 py-0.5 rounded-full bg-sky-100 font-sans">SD 6</span></h1>
+                    <p class="text-[10px] text-slate-500 font-medium">Petualangan Matematika Interaktif</p>
+                </div>
+            </button>
+
+            <!-- Quick Nav Menu Dropdown / Buttons -->
+            <nav class="flex items-center space-x-1">
+                <button onclick="navigateTo('dashboard')" title="Dashboard" class="p-2.5 text-slate-600 hover:text-sky-600 rounded-xl hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER (MOBILE FIRST MAX-WIDTH CONTAINER) -->
+    <main class="max-w-md mx-auto w-full px-4 py-4 flex-grow">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: DASHBOARD PORTAL SELECTOR         -->
+        <!-- ========================================== -->
+        <section id="view-dashboard" class="space-y-5">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-sky-500 to-emerald-400 rounded-3xl p-5 text-white shadow-xl shadow-sky-100">
+                <div class="relative z-10 space-y-2">
+                    <span class="inline-block bg-white/20 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full border border-white/30">
+                        <i class="fa-solid fa-sparkles text-amber-300 mr-1"></i> Matematika Kelas 6 SD
+                    </span>
+                    <h2 class="font-display text-2xl font-bold leading-tight">Materi Rasio & Perbandingan</h2>
+                    <p class="text-xs text-sky-100 leading-relaxed">
+                        Pilih portal materi untuk mulai belajar atau uji pemahamanmu di portal asesmen!
+                    </p>
+                </div>
+                <!-- Decorative Circle -->
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            </div>
+
+            <!-- Portal Navigation Cards -->
+            <div class="space-y-3.5">
+                <h3 class="font-display text-lg font-bold text-slate-700 flex items-center">
+                    <i class="fa-solid fa-compass text-sky-500 mr-2"></i> Pilih Portal Pembelajaran
+                </h3>
+
+                <!-- CARD PORTAL 1 -->
+                <div onclick="navigateTo('portal1')" class="hover-bounce cursor-pointer bg-white rounded-2xl p-4 border-2 border-blue-100 shadow-md shadow-blue-50/50 flex items-center space-x-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-magnifying-glass-number text-2xl"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-0.5 rounded-md">Portal 1</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-slate-800 text-base group-hover:text-blue-600 transition-colors">
+                            Menentukan Besaran Belum Diketahui
+                        </h4>
+                        <p class="text-xs text-slate-500 mt-0.5">Konsep rasio, faktor pengali, & 5 langkah mudah penyelesaian.</p>
+                    </div>
+                </div>
+
+                <!-- CARD PORTAL 2 -->
+                <div onclick="navigateTo('portal2')" class="hover-bounce cursor-pointer bg-white rounded-2xl p-4 border-2 border-emerald-100 shadow-md shadow-emerald-50/50 flex items-center space-x-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-scale-balanced text-2xl"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-md">Portal 2</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-slate-800 text-base group-hover:text-emerald-600 transition-colors">
+                            Menentukan Besaran Jumlah Berubah
+                        </h4>
+                        <p class="text-xs text-slate-500 mt-0.5">Perubahan bertambah & berkurang dengan tabel komparasi.</p>
+                    </div>
+                </div>
+
+                <!-- CARD PORTAL 3 -->
+                <div onclick="navigateTo('portal3')" class="hover-bounce cursor-pointer bg-gradient-to-r from-rose-500 to-amber-500 rounded-2xl p-4 text-white shadow-lg shadow-rose-200 flex items-center space-x-4 group transition">
+                    <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-pen-ruler text-2xl"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] font-bold bg-white/20 text-white px-2 py-0.5 rounded-md backdrop-blur-md">Portal 3</span>
+                            <i class="fa-solid fa-arrow-right text-xs text-white group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-white text-base">
+                            Asesmen Formatif (20 Soal)
+                        </h4>
+                        <p class="text-xs text-rose-100 mt-0.5">Uji kemampuanmu & kirim nilai langsung ke WA Guru!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Tips Card -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start space-x-3">
+                <div class="text-amber-500 text-xl mt-0.5 shrink-0">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div>
+                    <h5 class="font-bold text-slate-800 text-xs uppercase tracking-wide">Tips Belajar Matematika</h5>
+                    <p class="text-xs text-slate-600 mt-1">
+                        Pahami konsep dasar di Portal 1 dan Portal 2 terlebih dahulu sebelum mengerjakan soal latihan di Portal 3 ya!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: PORTAL 1 MATERI 1                 -->
+        <!-- ========================================== -->
+        <section id="view-portal1" class="hidden space-y-5">
+            <!-- Header Nav Back -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <button onclick="navigateTo('dashboard')" class="flex items-center text-xs font-semibold text-slate-600 hover:text-blue-600">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Portal
+                </button>
+                <span class="text-xs font-bold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Portal 1</span>
+            </div>
+
+            <div class="space-y-1">
+                <h2 class="font-display text-xl font-bold text-slate-800">Menentukan Besaran yang Belum Diketahui</h2>
+                <p class="text-xs text-slate-500">Mempelajari konsep perbandingan rasio sederhana dan mencari nilai tersembunyi.</p>
+            </div>
+
+            <!-- CARD A: KONSEP RASIO -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-blue-600">
+                    <span class="w-7 h-7 rounded-lg bg-blue-100 font-bold text-xs flex items-center justify-center">A</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Konsep Dasar Rasio</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Rasio adalah perbandingan antara dua nilai. Jika dikatakan rasio benda <span class="font-bold text-blue-600">A : B = 2 : 3</span>, angka 2 dan 3 adalah <span class="underline decoration-sky-400 font-semibold">angka perbandingan</span>, bukan jumlah benda sebenarnya!
+                </p>
+                <div class="bg-sky-50 border-l-4 border-sky-500 p-3 rounded-r-xl text-xs text-slate-700 space-y-1">
+                    <p class="font-semibold text-sky-900"><i class="fa-solid fa-circle-info mr-1"></i> Catatan Penting:</p>
+                    <p>Rasio 2 : 3 bisa berarti jumlah sebenarnya adalah:</p>
+                    <ul class="list-disc list-inside text-slate-600 space-y-0.5 ml-1">
+                        <li><b>4 dan 6</b> (dikali faktor 2)</li>
+                        <li><b>8 dan 12</b> (dikali faktor 4)</li>
+                        <li><b>20 dan 30</b> (dikali faktor 10)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CARD B: 5 LANGKAH PENYELESAIAN -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-blue-600">
+                    <span class="w-7 h-7 rounded-lg bg-blue-100 font-bold text-xs flex items-center justify-center">B</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">5 Langkah Penyelesaian</h3>
+                </div>
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-start space-x-2.5 p-2 bg-slate-50 rounded-xl">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                        <div><strong class="text-slate-800">Tentukan Rasio:</strong> Tuliskan nilai rasio yang diketahui dalam bentuk A : B.</div>
+                    </div>
+                    <div class="flex items-start space-x-2.5 p-2 bg-slate-50 rounded-xl">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                        <div><strong class="text-slate-800">Identifikasi Jumlah Diketahui:</strong> Catat jumlah sebenarnya dari besaran yang ada.</div>
+                    </div>
+                    <div class="flex items-start space-x-2.5 p-2 bg-slate-50 rounded-xl">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                        <div><strong class="text-slate-800">Cari Faktor Pengali:</strong> Bagi jumlah sebenarnya dengan angka rasionya.</div>
+                    </div>
+                    <div class="flex items-start space-x-2.5 p-2 bg-slate-50 rounded-xl">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">4</span>
+                        <div><strong class="text-slate-800">Kalikan Rasio Lain:</strong> Kalikan angka rasio ditanya dengan faktor pengali tersebut.</div>
+                    </div>
+                    <div class="flex items-start space-x-2.5 p-2 bg-slate-50 rounded-xl">
+                        <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">5</span>
+                        <div><strong class="text-slate-800">Tuliskan Jawaban:</strong> Sertakan satuan (orang, buah, kelereng, dll).</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD C: CONTOH SOAL 1 WITH TABULAR VISUAL -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-blue-600">
+                    <span class="w-7 h-7 rounded-lg bg-blue-100 font-bold text-xs flex items-center justify-center">C</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Contoh Soal 1 (Posisi A)</h3>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                    <p class="font-semibold text-slate-800">Soal:</p>
+                    <p class="text-slate-600">Rasio siswa Kelas A dan B adalah <b>2 : 3</b>. Jika jumlah siswa Kelas A adalah <b>12 orang</b>, berapa jumlah siswa Kelas B?</p>
+                </div>
+
+                <!-- Visual Table -->
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full text-xs text-center">
+                        <thead class="bg-blue-600 text-white font-semibold">
+                            <tr>
+                                <th class="p-2 border-r border-blue-500">Kategori</th>
+                                <th class="p-2 border-r border-blue-500">Kelas A</th>
+                                <th class="p-2">Kelas B</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr>
+                                <td class="p-2 font-semibold bg-slate-50 border-r text-slate-700">Angka Rasio</td>
+                                <td class="p-2 font-bold text-blue-600 border-r">2</td>
+                                <td class="p-2 font-bold text-blue-600">3</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 font-semibold bg-slate-50 border-r text-slate-700">Faktor Pengali</td>
+                                <td class="p-2 text-emerald-600 font-bold border-r">× 6 (12 ÷ 2)</td>
+                                <td class="p-2 text-emerald-600 font-bold">× 6</td>
+                            </tr>
+                            <tr class="bg-blue-50/50">
+                                <td class="p-2 font-semibold bg-slate-100 border-r text-slate-800">Jumlah Sebenarnya</td>
+                                <td class="p-2 font-bold text-slate-800 border-r">12 orang</td>
+                                <td class="p-2 font-bold text-blue-700 underline">18 orang</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CARD D: CONTOH SOAL 2 (POSISI KEDUA) -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-blue-600">
+                    <span class="w-7 h-7 rounded-lg bg-blue-100 font-bold text-xs flex items-center justify-center">D</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Contoh Soal 2 (Posisi B)</h3>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                    <p class="font-semibold text-slate-800">Soal:</p>
+                    <p class="text-slate-600">Rasio kelereng Merah dan Biru adalah <b>3 : 5</b>. Jika kelereng Biru ada <b>20 butir</b>, berapa banyak kelereng Merah?</p>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs space-y-1">
+                    <p class="font-bold text-amber-900">Pembahasan Ringkas:</p>
+                    <p class="text-amber-800">1. Angka rasio Biru = 5</p>
+                    <p class="text-amber-800">2. Faktor pengali = 20 ÷ 5 = <b>4</b></p>
+                    <p class="text-amber-800">3. Kelereng Merah = 3 × 4 = <b>12 kelereng</b></p>
+                </div>
+            </div>
+
+            <!-- CARD E: RINGKASAN & INTERACTIVE CALCULATOR -->
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-4 shadow-lg space-y-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bookmark text-amber-300"></i>
+                    <h3 class="font-display font-bold text-base">E. Ringkasan Kunci</h3>
+                </div>
+                <p class="text-xs text-blue-100 leading-relaxed">
+                    Gunakan jumlah yang diketahui untuk menentukan <b>Faktor Pengali</b>. Setelah itu, kalikan besaran rasio lainnya dengan faktor tersebut!
+                </p>
+
+                <!-- Mini Interactive Scaler -->
+                <div class="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/20 text-xs space-y-2">
+                    <p class="font-bold text-amber-300 text-[11px] uppercase tracking-wide">Coba Simulator Rasio Interaktif:</p>
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-white/20 p-2 rounded-lg">
+                            <span class="block text-[10px] text-blue-200">Rasio A : B</span>
+                            <span class="font-bold text-sm">2 : 3</span>
+                        </div>
+                        <div class="bg-white/20 p-2 rounded-lg">
+                            <span class="block text-[10px] text-blue-200">Ubah Faktor Pengali</span>
+                            <input id="p1-multiplier" type="range" min="1" max="10" value="4" oninput="updateP1Sim()" class="w-full accent-amber-300 cursor-pointer">
+                        </div>
+                    </div>
+                    <div class="p-2 bg-white text-slate-800 rounded-lg text-center font-bold">
+                        Hasil Sebenarnya: A = <span id="p1-res-a" class="text-blue-600">8</span> , B = <span id="p1-res-b" class="text-indigo-600">12</span> (Faktor: <span id="p1-factor-label">4</span>)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Button -->
+            <button onclick="navigateTo('portal2')" class="w-full py-3 bg-blue-600 text-white font-display font-bold rounded-xl shadow-md hover:bg-blue-700 transition flex items-center justify-center space-x-2">
+                <span>Lanjut ke Portal 2</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: PORTAL 2 MATERI 2                 -->
+        <!-- ========================================== -->
+        <section id="view-portal2" class="hidden space-y-5">
+            <!-- Header Nav Back -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <button onclick="navigateTo('dashboard')" class="flex items-center text-xs font-semibold text-slate-600 hover:text-emerald-600">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Portal
+                </button>
+                <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2.5 py-1 rounded-full">Portal 2</span>
+            </div>
+
+            <div class="space-y-1">
+                <h2 class="font-display text-xl font-bold text-slate-800">Menentukan Besaran Setelah Jumlah Berubah</h2>
+                <p class="text-xs text-slate-500">Menghitung kebutuhan baru ketika jumlah subjek bertambah atau berkurang.</p>
+            </div>
+
+            <!-- CARD A: PENGERTIAN -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-100 font-bold text-xs flex items-center justify-center">A</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Pengertian Dasar</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Digunakan untuk mencari nilai baru ketika salah satu besaran berubah (misalnya jumlah tamu bertambah atau berkurang), dengan asumsi <span class="font-bold text-emerald-600">rasio perbandingan tetap</span>.
+                </p>
+            </div>
+
+            <!-- CARD B: CONTOH BERTAMBAH -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-100 font-bold text-xs flex items-center justify-center">B</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Contoh Perubahan Bertambah</h3>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                    <p class="font-semibold text-slate-800">Soal:</p>
+                    <p class="text-slate-600">4 orang membutuhkan 8 gelas air mineral. Jika tamu bertambah menjadi 10 orang, berapa gelas air yang dibutuhkan?</p>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs space-y-1.5">
+                    <p class="font-bold text-emerald-900">Langkah Penyelesaian:</p>
+                    <p class="text-emerald-800">1. Kebutuhan per orang = 8 ÷ 4 = <b>2 gelas/orang</b> (Rasio 1 : 2)</p>
+                    <p class="text-emerald-800">2. Untuk 10 orang = 10 × 2 = <b>20 gelas air</b></p>
+                </div>
+
+                <!-- Visual Comparison Table -->
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full text-xs text-center">
+                        <thead class="bg-emerald-600 text-white font-semibold">
+                            <tr>
+                                <th class="p-2 border-r border-emerald-500">Jumlah Orang</th>
+                                <th class="p-2 border-r border-emerald-500">Kebutuhan Air</th>
+                                <th class="p-2">Rasio Tetap</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr>
+                                <td class="p-2 font-medium">1 orang</td>
+                                <td class="p-2 text-emerald-600 font-semibold">2 gelas</td>
+                                <td class="p-2 text-slate-500">1 : 2</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-2 font-medium">4 orang (Awal)</td>
+                                <td class="p-2 text-emerald-600 font-semibold">8 gelas</td>
+                                <td class="p-2 text-slate-500">1 : 2</td>
+                            </tr>
+                            <tr class="bg-emerald-50">
+                                <td class="p-2 font-bold text-slate-800">10 orang (Baru)</td>
+                                <td class="p-2 font-bold text-emerald-700 underline">20 gelas</td>
+                                <td class="p-2 text-slate-500">1 : 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CARD C: CONTOH BERKURANG -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-100 font-bold text-xs flex items-center justify-center">C</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Contoh Perubahan Berkurang</h3>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                    <p class="font-semibold text-slate-800">Soal:</p>
+                    <p class="text-slate-600">8 orang membutuhkan 24 kue. Jika peserta berkurang menjadi 4 orang, berapa kue yang dibutuhkan?</p>
+                </div>
+                <div class="bg-sky-50 border border-sky-200 p-3 rounded-xl text-xs space-y-1">
+                    <p class="font-bold text-sky-900">Pembahasan:</p>
+                    <p class="text-sky-800">1. Kebutuhan per orang = 24 ÷ 8 = <b>3 kue/orang</b></p>
+                    <p class="text-sky-800">2. Untuk 4 orang = 4 × 3 = <b>12 kue</b></p>
+                </div>
+            </div>
+
+            <!-- CARD D: TABEL KOMPARASI PERBEDAAAN KEDUA JENIS SOAL -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-lg bg-emerald-100 font-bold text-xs flex items-center justify-center">D</span>
+                    <h3 class="font-display font-bold text-slate-800 text-base">Tabel Komparasi Jenis Soal</h3>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-slate-200 text-xs">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-800 text-white font-semibold">
+                            <tr>
+                                <th class="p-2.5">Fitur</th>
+                                <th class="p-2.5 bg-blue-700">Materi Portal 1</th>
+                                <th class="p-2.5 bg-emerald-700">Materi Portal 2</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr>
+                                <td class="p-2.5 font-bold bg-slate-50">Fokus utama</td>
+                                <td class="p-2.5 text-blue-700">Mencari 1 nilai dari pasangan rasio (A : B)</td>
+                                <td class="p-2.5 text-emerald-700">Mencari jumlah total baru akibat perubahan subjek</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold bg-slate-50">Kunci Utama</td>
+                                <td class="p-2.5 text-slate-600">Faktor pengali rasio</td>
+                                <td class="p-2.5 text-slate-600">Nilai per satuan unit (misal: kue/orang)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CARD E: CATATAN PENTING -->
+            <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl p-4 shadow-lg space-y-2">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-300"></i>
+                    <h3 class="font-display font-bold text-base">E. Catatan Syarat Utama</h3>
+                </div>
+                <p class="text-xs text-emerald-100 leading-relaxed">
+                    Perhitungan ini <b>hanya berlaku jika perbandingan bernilai tetap</b> (proporsional senilai). Pastikan konsumsi per orang atau per benda selalu konstan!
+                </p>
+            </div>
+
+            <!-- Bottom Action Button -->
+            <button onclick="navigateTo('portal3')" class="w-full py-3.5 bg-emerald-600 text-white font-display font-bold rounded-xl shadow-md hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
+                <span>Siap Mengerjakan Asesmen Portal 3</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 4: PORTAL 3 ASESMEN FORMATIF          -->
+        <!-- ========================================== -->
+        <section id="view-portal3" class="hidden space-y-5">
+            <!-- Header Nav Back -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <button onclick="navigateTo('dashboard')" class="flex items-center text-xs font-semibold text-slate-600 hover:text-rose-600">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Dashboard
+                </button>
+                <span class="text-xs font-bold text-rose-600 bg-rose-100 px-2.5 py-1 rounded-full">Portal 3</span>
+            </div>
+
+            <!-- PHASE A: FORM IDENTITAS & PETUNJUK -->
+            <div id="quiz-intro-card" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-md space-y-4">
+                <div class="text-center space-y-1">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl mx-auto flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h2 class="font-display text-xl font-bold text-slate-800">Formulir Asesmen Formatif</h2>
+                    <p class="text-xs text-slate-500">20 Soal Latihan Rasio Matematika SD Kelas 6</p>
+                </div>
+
+                <!-- Input Student Name -->
+                <div class="space-y-1.5">
+                    <label for="student-name-input" class="block text-xs font-bold text-slate-700">Nama Lengkap Siswa <span class="text-rose-500">*</span></label>
+                    <input type="text" id="student-name-input" placeholder="Masukkan nama kamu di sini..." class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500">
+                </div>
+
+                <!-- Petunjuk Mengerjakan -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs space-y-2">
+                    <p class="font-bold text-slate-800 flex items-center">
+                        <i class="fa-solid fa-list-check text-rose-500 mr-1.5"></i> Petunjuk Mengerjakan:
+                    </p>
+                    <ul class="list-disc list-inside text-slate-600 space-y-1 ml-1">
+                        <li>Terdiri dari <b>20 soal</b> (Bagian A & Bagian B).</li>
+                        <li><b>Pilihan Ganda:</b> Pilih 1 jawaban yang paling tepat.</li>
+                        <li><b>Isian Singkat:</b> Tuliskan angka hasilnya (contoh: <code>12</code>, <code>12 buah</code>, atau <code>12 orang</code>).</li>
+                        <li>Skor maksimal adalah <b>100</b> (5 poin per soal).</li>
+                    </ul>
+                </div>
+
+                <button onclick="startQuiz()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-500 text-white font-display font-bold text-sm rounded-xl shadow-md hover:opacity-95 transition flex items-center justify-center space-x-2">
+                    <span>Mulai Asesmen</span>
+                    <i class="fa-solid fa-play text-xs"></i>
+                </button>
+            </div>
+
+            <!-- PHASE B: ACTIVE QUIZ WORKSPACE (HIDDEN INITIALLY) -->
+            <div id="quiz-workspace" class="hidden space-y-4">
+                <!-- Quiz Progress Bar Header -->
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <div class="flex items-center justify-between text-xs font-semibold">
+                        <span id="quiz-user-display" class="text-slate-700"><i class="fa-solid fa-user text-rose-500 mr-1"></i> -</span>
+                        <span id="quiz-progress-text" class="text-rose-600 font-bold">Terjawab 0 / 20</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-rose-500 to-amber-500 h-2.5 rounded-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Filter / Section Switcher Tabs -->
+                <div class="flex bg-slate-200/80 p-1 rounded-xl text-xs font-semibold">
+                    <button id="tab-btn-a" onclick="filterQuizSection('A')" class="flex-1 py-1.5 rounded-lg bg-white text-slate-800 shadow-sm transition">Bagian A (1-10)</button>
+                    <button id="tab-btn-b" onclick="filterQuizSection('B')" class="flex-1 py-1.5 rounded-lg text-slate-600 transition">Bagian B (11-20)</button>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questions-list-container" class="space-y-4">
+                    <!-- Dynamic Questions Inserted via JavaScript -->
+                </div>
+
+                <!-- Finish & Submit Button -->
+                <div class="pt-2">
+                    <button onclick="submitQuiz()" class="w-full py-3.5 bg-rose-600 text-white font-display font-bold text-sm rounded-xl shadow-lg hover:bg-rose-700 transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-check-double text-base"></i>
+                        <span>Selesai & Lihat Hasil</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PHASE C: RESULT SUMMARY SCREEN (HIDDEN INITIALLY) -->
+            <div id="quiz-result-card" class="hidden bg-white rounded-2xl p-5 border border-slate-200 shadow-xl text-center space-y-5">
+                <div class="space-y-1">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-full mx-auto flex items-center justify-center text-3xl shadow-inner">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h2 class="font-display text-2xl font-bold text-slate-800">Hasil Asesmen Formatif</h2>
+                    <p id="result-student-name" class="text-xs font-medium text-slate-500">Nama Siswa: -</p>
+                </div>
+
+                <!-- Score Big Badge -->
+                <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 shadow-md space-y-1">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Nilai Akhir Kamu</span>
+                    <div class="font-display text-5xl font-extrabold text-amber-400">
+                        <span id="result-score">0</span> <span class="text-xl text-slate-300">/ 100</span>
+                    </div>
+                </div>
+
+                <!-- Breakdown Info Cards -->
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 space-y-0.5">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+                        <span class="block font-bold text-slate-700">Jawaban Benar</span>
+                        <span id="result-correct-count" class="font-extrabold text-emerald-600 text-lg">0 / 20</span>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 space-y-0.5">
+                        <i class="fa-solid fa-clock text-blue-600 text-base"></i>
+                        <span class="block font-bold text-slate-700">Waktu Pengerjaan</span>
+                        <span id="result-time-taken" class="font-extrabold text-blue-600 text-sm">0 menit</span>
+                    </div>
+                </div>
+
+                <!-- Confidentiality Badge -->
+                <div class="p-2.5 bg-slate-100 rounded-xl text-[11px] text-slate-500 flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-lock text-slate-400"></i>
+                    <span>Hasil evaluasi telah dicatat. Kunci jawaban dijaga kerahasiaannya.</span>
+                </div>
+
+                <!-- WhatsApp Integration Button -->
+                <button onclick="sendToWhatsApp()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Kirim Hasil ke WhatsApp</span>
+                </button>
+
+                <!-- Retake Assessment Button -->
+                <button onclick="resetQuiz()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+                    Coba Mengerjakan Ulang
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-6 text-center text-[11px] text-slate-400">
+        <div class="max-w-md mx-auto px-4">
+            <p>© 2026 Aplikasi Pembelajaran Interaktif Matematika SD</p>
+            <p class="mt-0.5">Dioptimalkan untuk Layar Smartphone • Kelas 6 Rasio</p>
+        </div>
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC ENGINE                    -->
+    <!-- ========================================== -->
+    <script>
+        // 20 SOAL ASESMEN FORMATIF DATA
+        const quizData = [
+            // [BAGIAN A: Menentukan Besaran Belum Diketahui]
+            {
+                id: 1,
+                section: 'A',
+                type: 'pg',
+                question: 'Rasio siswa Laki-laki dan Perempuan = 2 : 5. Jika jumlah siswa Laki-laki = 14 orang, berapa jumlah siswa Perempuan?',
+                options: ['A. 21', 'B. 28', 'C. 35', 'D. 42'],
+                correctKey: 'C'
+            },
+            {
+                id: 2,
+                section: 'A',
+                type: 'pg',
+                question: 'Rasio pensil Merah dan Biru = 3 : 4. Jika pensil Biru = 24 buah, berapa jumlah pensil Merah?',
+                options: ['A. 12', 'B. 16', 'C. 18', 'D. 32'],
+                correctKey: 'C'
+            },
+            {
+                id: 3,
+                section: 'A',
+                type: 'pg',
+                question: 'Rasio buku MTK dan B.Indo = 5 : 2. Jika buku MTK = 35 eksemplar, berapa buku B.Indo?',
+                options: ['A. 7', 'B. 12', 'C. 14', 'D. 20'],
+                correctKey: 'C'
+            },
+            {
+                id: 4,
+                section: 'A',
+                type: 'pg',
+                question: 'Rasio kelereng Merah dan Biru = 4 : 7. Jika kelereng Biru = 35 butir, berapa kelereng Merah?',
+                options: ['A. 15', 'B. 20', 'C. 25', 'D. 28'],
+                correctKey: 'B'
+            },
+            {
+                id: 5,
+                section: 'A',
+                type: 'pg',
+                question: 'Rasio siswa Kelas A dan B = 3 : 5. Jika siswa Kelas B = 40 orang, berapa siswa Kelas A?',
+                options: ['A. 15', 'B. 20', 'C. 24', 'D. 25'],
+                correctKey: 'C'
+            },
+            {
+                id: 6,
+                section: 'A',
+                type: 'isian',
+                question: 'Rasio buah Apel dan Jeruk = 2 : 3. Jika Jeruk = 18 buah, berapa jumlah Apel?',
+                correctNumber: 12
+            },
+            {
+                id: 7,
+                section: 'A',
+                type: 'isian',
+                question: 'Rasio buku Cerita dan Pengetahuan = 4 : 5. Jika buku Cerita = 32, berapa buku Pengetahuan?',
+                correctNumber: 40
+            },
+            {
+                id: 8,
+                section: 'A',
+                type: 'isian',
+                question: 'Rasio siswa Kelompok A dan B = 5 : 3. Jika Kelompok A = 25 orang, berapa siswa Kelompok B?',
+                correctNumber: 15
+            },
+            {
+                id: 9,
+                section: 'A',
+                type: 'isian',
+                question: 'Rasio kelereng Hijau dan Kuning = 3 : 8. Jika kelereng Kuning = 48, berapa kelereng Hijau?',
+                correctNumber: 18
+            },
+            {
+                id: 10,
+                section: 'A',
+                type: 'isian',
+                question: 'Rasio kartu Rina dan Sinta = 7 : 4. Jika kartu Rina = 42 lembar, berapa kartu Sinta?',
+                correctNumber: 24
+            },
+
+            // [BAGIAN B: Menentukan Besaran Setelah Jumlah Berubah]
+            {
+                id: 11,
+                section: 'B',
+                type: 'pg',
+                question: '3 orang memerlukan 6 gelas air mineral. Jika peserta bertambah menjadi 9 orang, berapa gelas air yang dibutuhkan?',
+                options: ['A. 12', 'B. 15', 'C. 18', 'D. 21'],
+                correctKey: 'C'
+            },
+            {
+                id: 12,
+                section: 'B',
+                type: 'pg',
+                question: '5 orang menghabiskan 15 porsi makanan. Jika ada 10 orang, berapa porsi makanan yang diperlukan?',
+                options: ['A. 20', 'B. 25', 'C. 30', 'D. 35'],
+                correctKey: 'C'
+            },
+            {
+                id: 13,
+                section: 'B',
+                type: 'pg',
+                question: '4 hiasan membutuhkan 12 lembar kertas origami. Untuk membuat 10 hiasan, berapa lembar kertas yang dibutuhkan?',
+                options: ['A. 20', 'B. 24', 'C. 30', 'D. 36'],
+                correctKey: 'C'
+            },
+            {
+                id: 14,
+                section: 'B',
+                type: 'pg',
+                question: '8 orang membutuhkan 24 potong kue. Jika peserta berkurang menjadi 4 orang, berapa kue yang dibutuhkan?',
+                options: ['A. 6', 'B. 8', 'C. 12', 'D. 16'],
+                correctKey: 'C'
+            },
+            {
+                id: 15,
+                section: 'B',
+                type: 'pg',
+                question: '6 kerajinan membutuhkan 18 stik es krim. Jika ingin membuat 15 kerajinan, berapa stik yang dibutuhkan?',
+                options: ['A. 30', 'B. 36', 'C. 40', 'D. 45'],
+                correctKey: 'D'
+            },
+            {
+                id: 16,
+                section: 'B',
+                type: 'isian',
+                question: '4 orang membutuhkan 12 gelas air. Jika ada 12 orang, berapa gelas air yang dibutuhkan?',
+                correctNumber: 36
+            },
+            {
+                id: 17,
+                section: 'B',
+                type: 'isian',
+                question: '6 orang menghabiskan 18 porsi. Jika hanya ada 2 orang, berapa porsi yang dibutuhkan?',
+                correctNumber: 6
+            },
+            {
+                id: 18,
+                section: 'B',
+                type: 'isian',
+                question: '5 bingkai butuh 20 stik es krim. Untuk membuat 12 bingkai, berapa stik yang dibutuhkan?',
+                correctNumber: 48
+            },
+            {
+                id: 19,
+                section: 'B',
+                type: 'isian',
+                question: '10 peserta butuh 30 lembar kertas. Jika peserta menjadi 15 orang, berapa lembar kertas yang dibutuhkan?',
+                correctNumber: 45
+            },
+            {
+                id: 20,
+                section: 'B',
+                type: 'isian',
+                question: '8 hiasan butuh 40 pita. Jika hanya membuat 4 hiasan, berapa pita yang dibutuhkan?',
+                correctNumber: 20
+            }
+        ];
+
+        // GLOBAL APP STATE
+        let appState = {
+            activePortal: 'dashboard',
+            studentName: '',
+            userAnswers: {}, // { questionId: value }
+            startTime: null,
+            endTime: null,
+            activeSectionFilter: 'A',
+            finalScore: 0,
+            correctCount: 0
+        };
+
+        // NAVIGATION SWITCHER
+        function navigateTo(viewId) {
+            appState.activePortal = viewId;
+            const views = ['dashboard', 'portal1', 'portal2', 'portal3'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) {
+                    if (v === viewId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // PORTAL 1 SIMULATOR INTERACTIVE LOGIC
+        function updateP1Sim() {
+            const mult = parseInt(document.getElementById('p1-multiplier').value, 10);
+            document.getElementById('p1-factor-label').innerText = mult;
+            document.getElementById('p1-res-a').innerText = 2 * mult;
+            document.getElementById('p1-res-b').innerText = 3 * mult;
+        }
+
+        // QUIZ INITIALIZATION & RENDER
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name-input').value.trim();
+            if (!nameInput) {
+                alert('Mohon tuliskan nama kamu terlebih dahulu!');
+                return;
+            }
+
+            appState.studentName = nameInput;
+            appState.startTime = new Date();
+            appState.userAnswers = {};
+
+            document.getElementById('quiz-user-display').innerHTML = `<i class="fa-solid fa-user text-rose-500 mr-1"></i> ${nameInput}`;
+            document.getElementById('quiz-intro-card').classList.add('hidden');
+            document.getElementById('quiz-workspace').classList.remove('hidden');
+
+            renderQuestions();
+            updateProgress();
+        }
+
+        function filterQuizSection(section) {
+            appState.activeSectionFilter = section;
+            const btnA = document.getElementById('tab-btn-a');
+            const btnB = document.getElementById('tab-btn-b');
+
+            if (section === 'A') {
+                btnA.className = 'flex-1 py-1.5 rounded-lg bg-white text-slate-800 font-bold shadow-sm transition';
+                btnB.className = 'flex-1 py-1.5 rounded-lg text-slate-600 transition';
+            } else {
+                btnB.className = 'flex-1 py-1.5 rounded-lg bg-white text-slate-800 font-bold shadow-sm transition';
+                btnA.className = 'flex-1 py-1.5 rounded-lg text-slate-600 transition';
+            }
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-list-container');
+            container.innerHTML = '';
+
+            const filteredQuestions = quizData.filter(q => q.section === appState.activeSectionFilter);
+
+            filteredQuestions.forEach((q) => {
+                const qCard = document.createElement('div');
+                qCard.className = 'bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3';
+
+                const answeredVal = appState.userAnswers[q.id];
+
+                let inputHtml = '';
+                if (q.type === 'pg') {
+                    inputHtml = `
+                        <div class="space-y-2 pt-1">
+                            ${q.options.map((opt) => {
+                                const optKey = opt.charAt(0); // 'A', 'B', 'C', or 'D'
+                                const isChecked = answeredVal === optKey ? 'checked' : '';
+                                return `
+                                    <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition ${isChecked ? 'bg-rose-50/80 border-rose-300 font-semibold' : ''}">
+                                        <input type="radio" name="question-${q.id}" value="${optKey}" ${isChecked} onchange="saveAnswer(${q.id}, '${optKey}')" class="w-4 h-4 text-rose-600 accent-rose-600 focus:ring-rose-500">
+                                        <span class="text-xs text-slate-700">${opt}</span>
+                                    </label>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                } else { // ISIAN
+                    const valText = answeredVal !== undefined ? answeredVal : '';
+                    inputHtml = `
+                        <div class="pt-1">
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Ketikkan jawaban berupa angka:</label>
+                            <input type="text" placeholder="Contoh: 12 atau 12 buah" value="${valText}" oninput="saveAnswer(${q.id}, this.value)" class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-rose-500/50">
+                        </div>
+                    `;
+                }
+
+                qCard.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <span class="text-[11px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md">Soal #${q.id}</span>
+                        <span class="text-[10px] text-slate-400 font-medium">Bobot: 5 Poin</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 leading-relaxed">${q.question}</p>
+                    ${inputHtml}
+                `;
+
+                container.appendChild(qCard);
+            });
+        }
+
+        function saveAnswer(qId, val) {
+            if (val.trim() === '') {
+                delete appState.userAnswers[qId];
+            } else {
+                appState.userAnswers[qId] = val.trim();
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalAnswered = Object.keys(appState.userAnswers).length;
+            document.getElementById('quiz-progress-text').innerText = `Terjawab ${totalAnswered} / 20`;
+            const pct = (totalAnswered / 20) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+        }
+
+        /**
+         * FLEXIBLE GRADING REGEX EVALUATOR
+         * Extracts primary digits from user input to determine correctness.
+         * Example: if target is 12, inputs "12", "12 buah", "12 apel", "3x4=12", "12 orang" will all evaluate to true.
+         */
+        function checkFlexibleAnswer(userInput, targetNumber) {
+            if (!userInput) return false;
+            const str = String(userInput).trim().toLowerCase();
+            if (str === '') return false;
+
+            // Extract all numbers (integers or decimals)
+            const matches = str.match(/\d+(?:\.\d+)?/g);
+            if (!matches) return false;
+
+            // Check if targetNumber matches any extracted number
+            return matches.some(numStr => parseFloat(numStr) === Number(targetNumber));
+        }
+
+        function submitQuiz() {
+            const answeredCount = Object.keys(appState.userAnswers).length;
+            if (answeredCount < 20) {
+                const confirmSubmit = confirm(`Kamu baru menjawab ${answeredCount} dari 20 soal. Yakin ingin menyelesaikan sekarang?`);
+                if (!confirmSubmit) return;
+            }
+
+            appState.endTime = new Date();
+            let correctTotal = 0;
+
+            quizData.forEach(q => {
+                const userAns = appState.userAnswers[q.id];
+                if (q.type === 'pg') {
+                    if (userAns && userAns.toUpperCase() === q.correctKey) {
+                        correctTotal++;
+                    }
+                } else if (q.type === 'isian') {
+                    if (checkFlexibleAnswer(userAns, q.correctNumber)) {
+                        correctTotal++;
+                    }
+                }
+            });
+
+            appState.correctCount = correctTotal;
+            appState.finalScore = correctTotal * 5; // 20 questions * 5 = 100
+
+            // Show Result Screen
+            document.getElementById('quiz-workspace').classList.add('hidden');
+            document.getElementById('quiz-result-card').classList.remove('hidden');
+
+            // Populate Results UI
+            document.getElementById('result-student-name').innerText = `Nama Siswa: ${appState.studentName}`;
+            document.getElementById('result-score').innerText = appState.finalScore;
+            document.getElementById('result-correct-count').innerText = `${correctTotal} / 20`;
+
+            // Calculate elapsed time
+            const diffMs = appState.endTime - appState.startTime;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffSecs = Math.floor((diffMs % 60000) / 1000);
+            const timeString = diffMins > 0 ? `${diffMins} menit ${diffSecs} detik` : `${diffSecs} detik`;
+            document.getElementById('result-time-taken').innerText = timeString;
+
+            // Trigger Celebration Animation
+            triggerConfetti();
+        }
+
+        // WHATSAPP INTEGRATION
+        function sendToWhatsApp() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+            const waMessage = 
+`*REKAP LATIHAN MATEMATIKA KELAS 6 - RASIO*
+----------------------------------------
+👤 *Nama Siswa:* ${appState.studentName}
+🏫 *Kelas:* Kelas 6 SD
+📊 *Nilai Akhir:* ${appState.finalScore} / 100
+✅ *Jawaban Benar:* ${appState.correctCount} dari 20 Soal
+📅 *Waktu:* ${dateStr}, Pukul ${timeStr} WIB
+----------------------------------------
+_Dikirim melalui Aplikasi Pembelajaran Interaktif Matematika_`;
+
+            const waUrl = `https://wa.me/?text=${encodeURIComponent(waMessage)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result-card').classList.add('hidden');
+            document.getElementById('quiz-intro-card').classList.remove('hidden');
+            appState.userAnswers = {};
+            document.getElementById('student-name-input').value = '';
+        }
+
+        // CONFETTI CANVAS EFFECT
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vy: Math.random() * 3 + 2,
+                    vx: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360
+                });
+            }
+
+            let animationFrame;
+            let timer = 0;
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p) => {
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+
+                timer++;
+                if (timer < 180) { // Run for ~3 seconds
+                    animationFrame = requestAnimationFrame(render);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            render();
+        }
+
+        // INITIALIZE ON WINDOW LOAD
+        window.onload = function() {
+            navigateTo('dashboard');
+        };
+    </script>
+</body>
+</html>
